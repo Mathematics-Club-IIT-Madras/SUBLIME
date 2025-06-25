@@ -52,34 +52,28 @@ float corr(const vector<float> & x, const vector<float> & y)
 
 int main()
 {
+    vector<string> timestamp;
+    vector<float> values;
     ifstream file("data.csv");
-    if (!file.is_open())
-    {
-        return -1;
-    }
-    vector <string> timestamp;
-    vector <float> value;
+
     string line;
+    getline(file, line); // Header line
 
     while (getline(file, line))
     {
-        istringstream ss(line);
-        {
-            // Take 2 values based on comma
-            string ts, val;
-            getline(ss, ts, ',');
-            getline(ss, val, ',');
-            timestamp.push_back(ts);
-            value.push_back(stof(val));
-        }
+        stringstream ss(line);
+        string ts, val;
+        getline(ss, ts, ',');
+        getline(ss, val, ',');
+        
+        timestamp.push_back(ts);
+        values.push_back(stof(val));   
     }
     file.close();
 
-    cout << "Mu: " << mu(value) << endl;
-    cout << "Sigma: " << sigma(value) << endl;
-    cout << "Corr: " << corr(value, value) << endl;
-
-    // Wait for key to close
+    cout << "Mu: " << mu(values) << endl;
+    cout << "Sigma: " << sigma(values) << endl;
+    cout << "Corr: " << corr(values, values) << endl;    // Wait for key to close
     cout << "Press Enter to exit...";
     cin.ignore();
     return 0;
